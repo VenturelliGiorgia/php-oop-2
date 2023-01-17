@@ -1,33 +1,43 @@
 <?php
+
 class Category
 {
-    private $categoryName;
-    private $icon;
+    protected $name;
+    protected $icon = "fa-cat";
 
-    function __construct($_categoryName, $_icon)
+    function __construct($_name, $_icon = null)
     {
-        $this->setCategoryName($_categoryName);
+        $this->setName($_name);
         $this->setIcon($_icon);
     }
 
-    public function setCategoryName($categoryName)
+    public function getName()
     {
-        $this->categoryName = $categoryName;
+        return $this->name;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+
         return $this;
     }
 
-    public function getCategoryName()
-    {
-        return $this->categoryName;
-    }
-
-    public function setIcon($icon)
-    {
-        $this->icon = $icon;
-        return $this;
-    }
     public function getIcon()
     {
         return $this->icon;
     }
-};
+    public function setIcon($icon)
+    {
+        if (empty($icon)) {
+            return;
+        }
+
+        $this->icon = $icon;
+        return $this;
+    }
+
+    public function getIconHTML()
+    {
+        return "<i class='fa-solid $this->icon' />";
+    }
+}

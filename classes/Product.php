@@ -7,16 +7,16 @@ class Product
     private $name;
     private $img;
     private $category;
-    private $type;
+    private $isAvailable = true;
     private $price;
 
-    function __construct( $_name, $_img, $_category, $_type, $_price)
+    function __construct($_name, $_img, $_category,  $_price, $_isAvailable = null)
     {
 
         $this->setName($_name);
         $this->setImg($_img);
         $this->setCategory($_category);
-        $this->setType($_type);
+        $this->setIsAvailable($_isAvailable);
         $this->setPrice($_price);
     }
 
@@ -50,14 +50,15 @@ class Product
         return $this->category;
     }
 
-    public function setType($type)
+    public function setIsAvailable($isAvailable)
     {
-        $this->type = $type;
-        return $this;
+        if (is_null($isAvailable)) {
+            return;
+        }
     }
-    public function getType()
+    public function getIsAvailable()
     {
-        return $this->type;
+        return $this->isAvailable;
     }
 
     public function setPrice($price)
