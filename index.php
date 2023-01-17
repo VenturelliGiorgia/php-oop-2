@@ -1,22 +1,25 @@
 <?php
 require_once "./classes/Category.php";
 require_once "./classes/Product.php";
+require_once "./classes/Food.php";
+require_once "./classes/Game.php";
+
 
 $catCategory = new Category("Gatti");
 $dogCategory = new Category("Cani", "fa-dog");
-echo $catCategory->getIconHTML();
+
 $products = [];
 
-$products0 = new Product("cuccia", "https://picsum.photos/300", $catCategory, "29.99$", false);
-$products2 = new Product("cibo in scatola", "https://picsum.photos/300", "cibo", "2.99$");
-$products3 = new Product("palla", "https://picsum.photos/300", "gioco", "3.50$");
-$products4 = new Product("tiragraffi", "https://picsum.photos/300", "gioco", "30.99$");
-$products5 = new Product("spazzola", "https://picsum.photos/300", "cura e benessere", "24.99$");
-$products6 = new Product("erba gatta", "https://picsum.photos/300", "cura e benessere", "6.99$");
-$products7 = new Product("collare", "https://picsum.photos/300", "accessori", "5.50$");
-$products8 = new Product("coperta", "https://picsum.photos/300", "cura e benessere", "15$");
-var_dump($products0);
-array_push($products, $products2, $products3, $products4, $products5, $products6, $products7, $products8);
+$products1 = new Product("cuccia", "https://picsum.photos/300", $catCategory, "29.99$", false);
+$products2 = new Food("cibo in scatola", "https://picsum.photos/300", $catCategory, "1.5$", 250);
+$products3 = new Game("palla", "https://picsum.photos/300", $dogCategory, "2.99$", ["plastica"]);
+$products4 = new Game("tiragraffi", "https://picsum.photos/300", $catCategory, "30.99$", ["plastica", "cotone"]);
+$products5 = new Product("spazzola", "https://picsum.photos/300", $catCategory, "24.99$");
+$products6 = new Food("Crochette per gatti", "https://picsum.photos/300", $catCategory, "3.99$", "300");
+$products7 = new Product("collare", "https://picsum.photos/300", $dogCategory, "5.50$");
+$products8 = new Product("coperta", "https://picsum.photos/300", $dogCategory, "15$");
+
+array_push($products, $products1, $products2, $products3, $products4, $products5, $products6, $products7, $products8);
 
 ?>
 
@@ -36,20 +39,31 @@ array_push($products, $products2, $products3, $products4, $products5, $products6
     <div class="container">
         <h1 class="text-center m-4">Petshop</h1>
         <div class="row g-3">
-            <?php foreach ($products as $prodotti) { ?>
+            <?php foreach ($products as $prodotto) { ?>
                 <div class="col-3">
                     <div class="card">
                         <div class="card-img">
-                            <img class="img-fluid" src=" <?php echo $prodotti->getImg() ?>" alt="">
+                            <img class="img-fluid" src=" <?php echo $prodotto->getImg() ?>" alt="">
                         </div>
                         <div class="p-2">
-                            <span class="d-block"> <?php echo $prodotti->getName() ?></span>
-                            <span class="fw-bold d-block"> <?php echo $prodotti->getPrice() ?></span>
-                            <span> <?php echo $prodotti->getCategory() ?></span>
+                            <span class="d-block">
+                               Categoria: <i class="fa-solid  <?php echo $prodotto->getCategory()->getIcon(); ?> "></i>
+                            </span>
+                            <span class="d-block"><?php echo $prodotto->getName() ?></span>
+                            <span class="fw-bold d-block"><?php echo $prodotto->getPrice() ?> </span>
+                            <?php if (method_exists($prodotto, "getCalories")) {
+                                echo "<span>Calorie: {$prodotto->getCalories()}</span>";
+                            } ?>
+
+                            <?php if (method_exists($prodotto, "getMaterials")) { ?>
+                                <span>Materiali: <?php echo implode("<br> ", $prodotto->getMaterials()) ?></span>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
+
             <?php } ?>
+
         </div>
     </div>
 </body>

@@ -10,7 +10,7 @@ class Product
     private $isAvailable = true;
     private $price;
 
-    function __construct($_name, $_img, $_category,  $_price, $_isAvailable = null)
+    function __construct($_name, $_img, Category $_category,  $_price, $_isAvailable = null)
     {
 
         $this->setName($_name);
